@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="hu"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Lessons.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Wumpus</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">Lessons.java</span></div><h1>Lessons.java</h1><pre class="source lang-java linenums">package org.example;
+
+import java.sql.Time;
+
+public class Lessons {
+
+    private int id;
+    private String lesson;
+    private Time start;  // 'int' helyett 'Time' típusúra változtatva
+    private Time finish; // 'int' helyett 'Time' típusúra változtatva
+    private String student;
+    private int grade;
+
+<span class="nc" id="L14">    public Lessons() {</span>
+        // Paraméter nélküli konstruktor
+<span class="nc" id="L16">    }</span>
+
+    // Módosított konstruktor a 'Time' típusok elfogadására
+<span class="fc" id="L19">    public Lessons(int id, String lesson, Time start, Time finish, String student, int grade) {</span>
+<span class="fc" id="L20">        this.id = id;</span>
+<span class="fc" id="L21">        this.lesson = lesson;</span>
+<span class="fc" id="L22">        this.start = start;</span>
+<span class="fc" id="L23">        this.finish = finish;</span>
+<span class="fc" id="L24">        this.student = student;</span>
+<span class="fc" id="L25">        this.grade = grade;</span>
+<span class="fc" id="L26">    }</span>
+
+    // Getterek és Setterek, módosítva a 'Time' típusok kezelésére
+<span class="fc" id="L29">    public int getId() { return id; }</span>
+<span class="fc" id="L30">    public void setId(int id) { this.id = id; }</span>
+
+<span class="fc" id="L32">    public String getLesson() { return lesson; }</span>
+<span class="fc" id="L33">    public void setLesson(String lesson) { this.lesson = lesson; }</span>
+
+<span class="fc" id="L35">    public Time getStart() { return start; } // 'Time' típusúra változtatva</span>
+<span class="fc" id="L36">    public void setStart(Time start) { this.start = start; } // 'Time' típusúra változtatva</span>
+
+<span class="fc" id="L38">    public Time getFinish() { return finish; } // 'Time' típusúra változtatva</span>
+<span class="fc" id="L39">    public void setFinish(Time finish) { this.finish = finish; } // 'Time' típusúra változtatva</span>
+
+<span class="fc" id="L41">    public String getStudent() { return student; }</span>
+<span class="fc" id="L42">    public void setStudent(String student) { this.student = student; }</span>
+
+<span class="fc" id="L44">    public int getGrade() { return grade; }</span>
+<span class="fc" id="L45">    public void setGrade(int grade) { this.grade = grade; }</span>
+
+    @Override
+    public String toString() {
+        // A 'toString' metódus frissítése a 'Time' típusok megjelenítésére
+<span class="fc" id="L50">        return &quot;Lessons{&quot; +</span>
+                &quot;id=&quot; + id +
+                &quot;, lesson='&quot; + lesson + '\'' +
+                &quot;, start=&quot; + start +
+                &quot;, finish=&quot; + finish +
+                &quot;, student='&quot; + student + '\'' +
+                &quot;, grade=&quot; + grade +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

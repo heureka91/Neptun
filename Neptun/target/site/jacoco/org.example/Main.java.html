@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="hu"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Wumpus</a> &gt; <a href="index.source.html" class="el_package">org.example</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">package org.example;
+
+import java.sql.*;
+import java.util.Scanner;
+
+<span class="nc" id="L6">public class Main {</span>
+
+    public static void main(String[] args) {
+<span class="nc" id="L9">        DatabaseManager.initializeDB();</span>
+<span class="nc" id="L10">        Scanner scanner = new Scanner(System.in);</span>
+        while (true) {
+<span class="nc" id="L12">            displayMenu();</span>
+<span class="nc" id="L13">            int option = scanner.nextInt();</span>
+<span class="nc" id="L14">            scanner.nextLine();</span>
+
+<span class="nc bnc" id="L16" title="All 8 branches missed.">            switch (option) {</span>
+                case 1:
+<span class="nc" id="L18">                    printDatabase();</span>
+<span class="nc" id="L19">                    break;</span>
+                case 2:
+<span class="nc" id="L21">                    addClass(scanner);</span>
+<span class="nc" id="L22">                    break;</span>
+                case 3:
+<span class="nc" id="L24">                    registerForClass(scanner);</span>
+<span class="nc" id="L25">                    break;</span>
+                case 4:
+<span class="nc" id="L27">                    addGrade(scanner);</span>
+<span class="nc" id="L28">                    break;</span>
+                case 5:
+<span class="nc" id="L30">                    deleteCourse(scanner);</span>
+<span class="nc" id="L31">                    break;</span>
+                case 6:
+<span class="nc" id="L33">                    displayMenu();</span>
+<span class="nc" id="L34">                    break;</span>
+                case 0:
+<span class="nc" id="L36">                    System.out.println(&quot;Exiting...&quot;);</span>
+<span class="nc" id="L37">                    return;</span>
+                default:
+<span class="nc" id="L39">                    System.out.println(&quot;Invalid command. Please try again.&quot;);</span>
+                    break;
+            }
+<span class="nc" id="L42">        }</span>
+    }
+
+    private static void displayMenu() {
+<span class="nc" id="L46">        System.out.println(&quot;1. Print Student table&quot;);</span>
+<span class="nc" id="L47">        System.out.println(&quot;2. Add new class to the database&quot;);</span>
+<span class="nc" id="L48">        System.out.println(&quot;3. Register for the class&quot;);</span>
+<span class="nc" id="L49">        System.out.println(&quot;4. Add grade to person through ID&quot;);</span>
+<span class="nc" id="L50">        System.out.println(&quot;5. Delete course from database&quot;);</span>
+<span class="nc" id="L51">        System.out.println(&quot;6. Print the list of command on console&quot;);</span>
+<span class="nc" id="L52">        System.out.println(&quot;0. Exit&quot;);</span>
+<span class="nc" id="L53">    }</span>
+
+    private static void printDatabase() {
+<span class="nc" id="L56">        try (Connection connection = DatabaseManager.getConnection();</span>
+<span class="nc" id="L57">             Statement statement = connection.createStatement();</span>
+<span class="nc" id="L58">             ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM LESSONS&quot;)) {</span>
+
+<span class="nc bnc" id="L60" title="All 2 branches missed.">            while (resultSet.next()) {</span>
+<span class="nc" id="L61">                int id = resultSet.getInt(&quot;ID&quot;);</span>
+<span class="nc" id="L62">                String lesson = resultSet.getString(&quot;LESSON&quot;);</span>
+<span class="nc" id="L63">                Time start = resultSet.getTime(&quot;START&quot;); // Idő típusú adatok helyes kezelése</span>
+<span class="nc" id="L64">                Time finish = resultSet.getTime(&quot;FINISH&quot;); // Idő típusú adatok helyes kezelése</span>
+<span class="nc" id="L65">                String student = resultSet.getString(&quot;STUDENT&quot;);</span>
+<span class="nc" id="L66">                int grade = resultSet.getInt(&quot;GRADE&quot;);</span>
+
+<span class="nc" id="L68">                Lessons lessons = new Lessons(id, lesson, start, finish, student, grade);</span>
+<span class="nc" id="L69">                System.out.println(lessons);</span>
+<span class="nc" id="L70">            }</span>
+<span class="nc" id="L71">        } catch (SQLException e) {</span>
+<span class="nc" id="L72">            System.out.println(&quot;Error accessing database: &quot; + e.getMessage());</span>
+<span class="nc" id="L73">        }</span>
+<span class="nc" id="L74">    }</span>
+
+
+
+    private static void addClass(Scanner scanner) {
+<span class="nc" id="L79">        System.out.println(&quot;Enter class details:&quot;);</span>
+<span class="nc" id="L80">        System.out.print(&quot;Lesson Name: &quot;);</span>
+<span class="nc" id="L81">        String lessonName = scanner.nextLine();</span>
+<span class="nc" id="L82">        System.out.print(&quot;Lesson Start Time (HH:mm): &quot;);</span>
+<span class="nc" id="L83">        String startTime = scanner.nextLine();</span>
+<span class="nc" id="L84">        System.out.print(&quot;Lesson End Time (HH:mm): &quot;);</span>
+<span class="nc" id="L85">        String endTime = scanner.nextLine();</span>
+
+<span class="nc" id="L87">        String insertQuery = &quot;INSERT INTO LESSONS (LESSON, START, FINISH) VALUES (?, ?, ?)&quot;;</span>
+<span class="nc" id="L88">        try (Connection connection = DatabaseManager.getConnection();</span>
+<span class="nc" id="L89">             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {</span>
+
+<span class="nc" id="L91">            preparedStatement.setString(1, lessonName);</span>
+<span class="nc" id="L92">            preparedStatement.setString(2, startTime + &quot;:00&quot;);</span>
+<span class="nc" id="L93">            preparedStatement.setString(3, endTime + &quot;:00&quot;);</span>
+
+<span class="nc" id="L95">            int affectedRows = preparedStatement.executeUpdate();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">            if (affectedRows &gt; 0) {</span>
+<span class="nc" id="L97">                System.out.println(&quot;Class added successfully.&quot;);</span>
+            } else {
+<span class="nc" id="L99">                System.out.println(&quot;Failed to add class.&quot;);</span>
+            }
+<span class="nc" id="L101">        } catch (SQLException e) {</span>
+<span class="nc" id="L102">            System.out.println(&quot;Database error: &quot; + e.getMessage());</span>
+<span class="nc" id="L103">        }</span>
+<span class="nc" id="L104">    }</span>
+
+
+    private static void registerForClass(Scanner scanner) {
+<span class="nc" id="L108">        System.out.println(&quot;Registering for a class&quot;);</span>
+<span class="nc" id="L109">        System.out.print(&quot;Please enter the student's name: &quot;);</span>
+<span class="nc" id="L110">        String studentName = scanner.nextLine();</span>
+
+<span class="nc" id="L112">        System.out.print(&quot;Please enter the ID of the class to register for: &quot;);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        while (!scanner.hasNextInt()) {</span>
+<span class="nc" id="L114">            System.out.println(&quot;Invalid input. Please enter a numeric class ID.&quot;);</span>
+<span class="nc" id="L115">            scanner.next(); // Clear the invalid input</span>
+<span class="nc" id="L116">            System.out.print(&quot;Please enter the ID of the class to register for: &quot;);</span>
+        }
+<span class="nc" id="L118">        int classId = scanner.nextInt();</span>
+<span class="nc" id="L119">        scanner.nextLine(); // Clear the buffer after reading an integer</span>
+
+<span class="nc" id="L121">        String updateQuery = &quot;UPDATE LESSONS SET STUDENT = ? WHERE ID = ?&quot;;</span>
+<span class="nc" id="L122">        try (Connection connection = DatabaseManager.getConnection();</span>
+<span class="nc" id="L123">             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {</span>
+
+<span class="nc" id="L125">            preparedStatement.setString(1, studentName);</span>
+<span class="nc" id="L126">            preparedStatement.setInt(2, classId);</span>
+
+<span class="nc" id="L128">            int affectedRows = preparedStatement.executeUpdate();</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">            if (affectedRows &gt; 0) {</span>
+<span class="nc" id="L130">                System.out.println(&quot;Registration successful.&quot;);</span>
+            } else {
+<span class="nc" id="L132">                System.out.println(&quot;Registration failed. Please check the class ID.&quot;);</span>
+            }
+<span class="nc" id="L134">        } catch (SQLException e) {</span>
+<span class="nc" id="L135">            System.out.println(&quot;Database error: &quot; + e.getMessage());</span>
+<span class="nc" id="L136">        }</span>
+<span class="nc" id="L137">    }</span>
+    private static void addGrade(Scanner scanner) {
+<span class="nc" id="L139">        System.out.println(&quot;Adding grade to a student&quot;);</span>
+<span class="nc" id="L140">        System.out.print(&quot;Please enter the ID of the class to which you want to add a grade: &quot;);</span>
+<span class="nc" id="L141">        int classId = scanner.nextInt();</span>
+<span class="nc" id="L142">        System.out.print(&quot;Please enter the grade: &quot;);</span>
+<span class="nc" id="L143">        int grade = scanner.nextInt();</span>
+
+        // A scanner.nextLine() hívás megtisztítja az input buffert
+<span class="nc" id="L146">        scanner.nextLine();</span>
+
+<span class="nc" id="L148">        String updateQuery = &quot;UPDATE LESSONS SET GRADE = ? WHERE ID = ?&quot;;</span>
+<span class="nc" id="L149">        try (Connection connection = DatabaseManager.getConnection();</span>
+<span class="nc" id="L150">             PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {</span>
+
+<span class="nc" id="L152">            preparedStatement.setInt(1, grade);</span>
+<span class="nc" id="L153">            preparedStatement.setInt(2, classId);</span>
+
+<span class="nc" id="L155">            int affectedRows = preparedStatement.executeUpdate();</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">            if (affectedRows &gt; 0) {</span>
+<span class="nc" id="L157">                System.out.println(&quot;Grade added successfully.&quot;);</span>
+            } else {
+<span class="nc" id="L159">                System.out.println(&quot;Failed to add grade. Please check the class ID.&quot;);</span>
+            }
+<span class="nc" id="L161">        } catch (SQLException e) {</span>
+<span class="nc" id="L162">            System.out.println(&quot;Database error: &quot; + e.getMessage());</span>
+<span class="nc" id="L163">        }</span>
+<span class="nc" id="L164">    }</span>
+    private static void deleteCourse(Scanner scanner) {
+<span class="nc" id="L166">        System.out.println(&quot;Deleting a course&quot;);</span>
+<span class="nc" id="L167">        System.out.print(&quot;Please enter the ID of the course you want to delete: &quot;);</span>
+<span class="nc" id="L168">        int courseId = scanner.nextInt();</span>
+
+        // A scanner.nextLine() hívás megtisztítja az input buffert
+<span class="nc" id="L171">        scanner.nextLine();</span>
+
+<span class="nc" id="L173">        String deleteQuery = &quot;DELETE FROM LESSONS WHERE ID = ?&quot;;</span>
+<span class="nc" id="L174">        try (Connection connection = DatabaseManager.getConnection();</span>
+<span class="nc" id="L175">             PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {</span>
+
+<span class="nc" id="L177">            preparedStatement.setInt(1, courseId);</span>
+
+<span class="nc" id="L179">            int affectedRows = preparedStatement.executeUpdate();</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">            if (affectedRows &gt; 0) {</span>
+<span class="nc" id="L181">                System.out.println(&quot;Course deleted successfully.&quot;);</span>
+            } else {
+<span class="nc" id="L183">                System.out.println(&quot;Failed to delete course. Please check the course ID.&quot;);</span>
+            }
+<span class="nc" id="L185">        } catch (SQLException e) {</span>
+<span class="nc" id="L186">            System.out.println(&quot;Database error: &quot; + e.getMessage());</span>
+<span class="nc" id="L187">        }</span>
+<span class="nc" id="L188">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

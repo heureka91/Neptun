@@ -1,2 +1,2 @@
 # Neptun
-Sinka Tibor és Jóni Csaba készitette.
+Sinka Tibor, Jóni Csaba és Gebei László készitette.

@@ -75,7 +75,7 @@ public class Main {
 
 
 
-    private static void addClass(Scanner scanner) {
+    static void addClass(Scanner scanner) {
         System.out.println("Enter class details:");
         System.out.print("Lesson Name: ");
         String lessonName = scanner.nextLine();

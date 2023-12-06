@@ -11,7 +11,7 @@ import java.sql.Statement;
     private static final String PASS = &quot;&quot;;
 
     public static void initializeDB() {
-<span class="nc" id="L14">        String createTableSQL = &quot;CREATE TABLE IF NOT EXISTS LESSONS (&quot; +</span>
+<span class="fc" id="L14">        String createTableSQL = &quot;CREATE TABLE IF NOT EXISTS LESSONS (&quot; +</span>
                 &quot;ID INT AUTO_INCREMENT PRIMARY KEY, &quot; +
                 &quot;LESSON VARCHAR(255), &quot; +
                 &quot;START TIME, &quot; +
@@ -22,10 +22,10 @@ import java.sql.Statement;
 <span class="nc" id="L22">             Statement stmt = conn.createStatement()) {</span>
 <span class="nc" id="L23">            stmt.execute(createTableSQL);</span>
 <span class="nc" id="L24">            System.out.println(&quot;Table 'LESSONS' has been created.&quot;);</span>
-<span class="nc" id="L25">        } catch (SQLException e) {</span>
-<span class="nc" id="L26">            e.printStackTrace();</span>
+<span class="fc" id="L25">        } catch (SQLException e) {</span>
+<span class="fc" id="L26">            e.printStackTrace();</span>
 <span class="nc" id="L27">        }</span>
-<span class="nc" id="L28">    }</span>
+<span class="fc" id="L28">    }</span>
 
     public static Connection getConnection() throws SQLException {
 <span class="nc" id="L31">        return DriverManager.getConnection(DB_URL, USER, PASS);</span>

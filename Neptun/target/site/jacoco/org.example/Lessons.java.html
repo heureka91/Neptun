@@ -6,8 +6,8 @@ public class Lessons {
 
     private int id;
     private String lesson;
-    private Time start;  // 'int' helyett 'Time' típusúra változtatva
-    private Time finish; // 'int' helyett 'Time' típusúra változtatva
+    private Time start;
+    private Time finish;
     private String student;
     private int grade;
 
